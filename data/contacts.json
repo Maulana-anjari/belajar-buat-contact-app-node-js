@@ -1,1 +1,22 @@
-[{"nama":"Maulana","email":"maulana17anjari@gmail.com","nomorHP":"0895619386814"},{"nama":"Peni Dwi","email":"peni17dwi@gmail.com","nomorHP":"89873294798"},{"nama":"Rahmat","email":"rahmat123@gmail.com","nomorHP":"09876542213"},{"nama":"Rahmat","email":"rrrr@gmail.com","nomorHP":"9892873497"}]
+[
+    {
+        "nama": "Maulana",
+        "email": "maulana@gmail.com",
+        "nomorHP": "0895619386814"
+    },
+    {
+        "nama": "Peni Dwi",
+        "email": "peni@gmail.com",
+        "nomorHP": "89873294798"
+    },
+    {
+        "nama": "Rahmat",
+        "email": "rahmat@gmail.com",
+        "nomorHP": "09876542213"
+    },
+    {
+        "nama": "Rahmat",
+        "email": "rrrr@gmail.com",
+        "nomorHP": "9892873497"
+    }
+]
