@@ -58,7 +58,37 @@ const listContact = () => {
     // console.table(contacts);
 }
 
-const detailContact = () => {
+const detailContact = (name) => {
+    const contacts = loadContacts()
+    const contact = contacts.find((contact) => 
+        contact.name.toLowerCase() === name.toLowerCase()
+    )
+    if(!contact){
+        console.log(chalk.red.inverse.bold(`Contact with name ${name} is not found!`))
+        return false;
+    }
+    console.log(`Name           : ${contact.name}`)
+    console.log(`Number Phone   : ${contact.number}`)
+    if(contact.email){
+        console.log(`Email          : ${contact.email}`)
+    }
     
 }
-module.exports = {saveContact, listContact, detailContact}
+
+const deleteContact = (name) => {
+    const contacts = loadContacts()
+    const newContacts = contacts.filter((contact) => 
+        contact.name.toLowerCase() !== name.toLowerCase()
+    )
+    if(contacts.length === newContacts.length){
+        console.log(chalk.red.inverse.bold(`Contact with name ${name} is not found!`))
+        return false;
+    }
+    fs.writeFileSync('data/contacts.json', JSON.stringify(newContacts));
+    console.log(chalk.green.inverse.bold(`Contact ${name} successfully deleted`));
+}
+module.exports = {
+    saveContact, 
+    listContact, 
+    detailContact, 
+    deleteContact}
