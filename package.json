@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Maulana-anjari/belajar-buat-contact-app-node-js#readme",
   "dependencies": {
+    "chalk": "^4.1.0",
+    "validator": "^13.7.0",
     "yargs": "^17.3.1"
   }
 }

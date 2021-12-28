@@ -1,10 +1,7 @@
-const fs = require('fs');
-const { resolve } = require('path/posix');
-const readline = require('readline');
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+const fs = require('fs')
+const { resolve } = require('path/posix')
+const chalk = require('chalk')
+const validator = require('validator')
 
 // membuat folder data
 const dirPATH = './data';
@@ -17,26 +14,51 @@ const dataPATH = './data/contacts.json';
 if(!fs.existsSync(dataPATH)){
     fs.writeFileSync(dataPATH, '[]', 'utf-8');
 }
-
-// pertanyaan
-const tulisPertanyaan = (pertanyaan) => {
-    return new Promise((resolve, reject)=> {
-        rl.question(pertanyaan, (apa) => resolve(apa));
-    })
-}
-
-// simpan kontak
-const saveContact = (nama,email, nomorHP) => {
-    const contact = {nama, email, nomorHP};
+//load contact from JSON
+const loadContacts = () => {
     const file = fs.readFileSync('data/contacts.json', 'utf-8');
     const contacts = JSON.parse(file);
-    
+    return contacts;
+}
+// simpan kontak
+const saveContact = (name,email, number) => {
+    const contact = {name, email, number};
+    // const file = fs.readFileSync('data/contacts.json', 'utf-8');
+    // const contacts = JSON.parse(file);
+    const contacts = loadContacts();
+    // checking duplicate
+    const duplicate = contacts.find((contact) => contact.name === name)
+    if(duplicate){
+        console.log(chalk.red.inverse.bold("Contact already there!"))
+        return false;
+    }
+    // chaecking email
+    if(email){
+        if(!validator.isEmail(email)){
+            console.log(chalk.red.inverse.bold("Email is not valid!"))
+            return false;
+        }
+    }
+    // checking number phone
+    if(!validator.isMobilePhone(number, 'id-ID')){
+        console.log(chalk.red.inverse.bold("Number phone is not valid!"))
+        return false;
+    }
     contacts.push(contact);
     fs.writeFileSync('data/contacts.json', JSON.stringify(contacts));
-
-    console.log(`Terima kasih ${nama}`);
-    console.table(contacts);
-    rl.close();
+    console.log(chalk.green.inverse.bold(`Contact ${name} successfully added`));
 }
 
-module.exports = {tulisPertanyaan, saveContact}
+const listContact = () => {
+    const contacts = loadContacts()
+    console.log(chalk.cyan.inverse.bold("Contact List: "))
+    contacts.forEach((contact, i) => {
+        console.log(`${i+1}. ${contact.name} ~ ${contact.number}`)
+    })
+    // console.table(contacts);
+}
+
+const detailContact = () => {
+    
+}
+module.exports = {saveContact, listContact, detailContact}
